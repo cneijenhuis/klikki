@@ -31,6 +31,7 @@ public class MainActivity extends CardboardActivity {
     public void onCardboardTrigger() {
         System.out.println("CARDBOARD TRIGGERED");
         if (displaysCircle) {
+            renderer.setPicturePos();
             renderer.unloadCircleOfImages();
             renderer.loadImage();
             displaysCircle = false;

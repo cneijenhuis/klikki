@@ -26,6 +26,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
 
     public Plane picture = null;
     public Plane oldPicture = null;
+    public int picturePos = 0;
     public float distance = 65;
     public float distance2 = 46;
 
@@ -41,6 +42,8 @@ public class MyRenderer extends RajawaliCardboardRenderer {
     Bitmap bm;
     Bitmap[] bmCircle = new Bitmap[8];
 
+    public float[] fwd = new float[3];
+
     public MyRenderer(Context context) {
         super(context);
     }
@@ -55,6 +58,11 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         }
     }
 
+    public void setPicturePos() {
+        picturePos = (int)((Math.atan2(fwd[0], -fwd[2]) / Math.PI * 4d) + 4.5d) % 8;
+        imgPointer = picturePos - 1;
+    }
+
     @Override
     public void onNewFrame(HeadTransform headTransform) {
         super.onNewFrame(headTransform);
@@ -66,11 +74,12 @@ public class MyRenderer extends RajawaliCardboardRenderer {
             getCurrentScene().removeChild(oldPicture);
             oldPicture = null;
         }
+
+        headTransform.getForwardVector(fwd, 0);
     }
 
     @Override
     protected void initScene() {
-        // loadImage();
         loadCircleOfImages();
 
         getCurrentCamera().setPosition(Vector3.ZERO);
@@ -78,6 +87,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
     }
 
     public void loadCircleOfImages() {
+        imgPointer = -1;
         for (int i = 0; i < 8; i++) {
             bmCircle[i] = getNextBitmap();
             pictureCircle[i] = createPhotoSphereWithTexture(bmCircle[i], 50f);
@@ -138,10 +148,11 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         bm = getNextBitmap();
         picture = createPhotoSphereWithTexture(bm, 100f);
 
-        if (oldPicture == null) picture.setPosition(0, 0, -distance);
-        else {
+        picture.setPosition(position(picturePos));
+        picture.setRotation(Vector3.Axis.Y, rotation(picturePos));
+        if (oldPicture != null) {
             float height = oldPicture.mHeight / 2 + picture.mHeight / 2 + 2;
-            picture.setPosition(0, height, -distance);
+            picture.setPosition(picture.getPosition().add(0, height, 0));
         }
         getCurrentScene().addChild(picture);
     }
