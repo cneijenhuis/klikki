@@ -34,7 +34,7 @@ import org.rajawali3d.math.vector.Vector3.Axis;
 public class Plane extends Object3D {
 
 	protected float mWidth;
-	protected float mHeight;
+	public float mHeight;
 	protected int mSegmentsW;
 	protected int mSegmentsH;
 	protected int mNumTextureTiles;
