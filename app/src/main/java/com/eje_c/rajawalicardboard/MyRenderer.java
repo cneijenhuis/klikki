@@ -28,6 +28,7 @@ import ly.kite.catalogue.Asset;
 
 public class MyRenderer extends RajawaliCardboardRenderer {
 
+    public Object3D kite = null;
     public Plane[] pictureCircle = new Plane[8];
 
     public Plane picture = null;
@@ -53,6 +54,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
 
     public MyRenderer(Context context) {
         super(context);
+
     }
 
     public void moveDown(Object3D oldPicture, double limit) {
@@ -100,6 +102,24 @@ public class MyRenderer extends RajawaliCardboardRenderer {
 
         getCurrentCamera().setPosition(Vector3.ZERO);
         getCurrentCamera().setFieldOfView(75);
+
+//        kite = new Plane(50, 50, 1, 1, Vector3.Axis.Y);
+        kite = new Cube(50);
+        kite.setPosition(0, 100, 0);
+        kite.setRotX(270);
+        kite.setRotY(180);
+
+        Material material = new Material();
+        material.setColor(0);
+        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.kite);
+        try {
+            material.addTexture(new Texture("kite", bm));
+        } catch (ATexture.TextureException e) {
+            throw new RuntimeException(e);
+        }
+        kite.setMaterial(material);
+
+        getCurrentScene().addChild(kite);
     }
 
     public void loadCircleOfImages() {
@@ -126,6 +146,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
             }
         }
         getCurrentScene().clearChildren();
+        getCurrentScene().addChild(kite);
     }
 
     private Vector3 position(int i) {
