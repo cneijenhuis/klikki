@@ -20,6 +20,12 @@ import org.rajawali3d.primitives.Cube;
 import org.rajawali3d.primitives.Plane;
 import org.rajawali3d.primitives.Sphere;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import ly.kite.catalogue.Asset;
+
 public class MyRenderer extends RajawaliCardboardRenderer {
 
     public Plane[] pictureCircle = new Plane[8];
@@ -43,6 +49,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
     Bitmap[] bmCircle = new Bitmap[8];
 
     public float[] fwd = new float[3];
+    public float roll = 0f;
 
     public MyRenderer(Context context) {
         super(context);
@@ -63,6 +70,10 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         imgPointer = picturePos - 1;
     }
 
+    public boolean isLookingUp() {
+        return roll > 0.9f;
+    }
+
     @Override
     public void onNewFrame(HeadTransform headTransform) {
         super.onNewFrame(headTransform);
@@ -76,6 +87,11 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         }
 
         headTransform.getForwardVector(fwd, 0);
+
+        float[] euler = new float[3];
+        headTransform.getEulerAngles(euler, 0);
+//        System.out.println("" + euler[0] + " " + euler[1] + " " + euler[2]);
+        roll = euler[0];
     }
 
     @Override
@@ -212,6 +228,14 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         sphere.setMaterial(material);
 
         return sphere;
+    }
+
+    public ArrayList<Asset> assets() {
+        ArrayList<Asset> assets = new ArrayList<>();
+        try {
+            assets.add(new Asset(new URL( "http://psps.s3.amazonaws.com/sdk_static/4.jpg" )));
+        } catch (MalformedURLException ex) {/* ignore */}
+        return assets;
     }
 
 }

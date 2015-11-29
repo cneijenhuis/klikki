@@ -3,6 +3,12 @@ package com.eje_c.rajawalicardboard;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import ly.kite.catalogue.Asset;
+
 /**
  * Created by whateverhuis on 29/11/15.
  */
@@ -49,4 +55,13 @@ public class EyemAlbumRenderer extends MyRenderer {
         return album.getPhoto(inAlbumPos);
     }
 
+    public ArrayList<Asset> assets() {
+        ArrayList<Asset> assets = new ArrayList<>();
+        EyeEmAlbumRetriever.Album album = eear.albums[albumPointer];
+        if (album == null) return assets;
+        try {
+            for (String photo : album.photoURLs) assets.add(new Asset(new URL( photo + ".jpg" )));
+        } catch (MalformedURLException ex) {/* ignore */}
+        return assets;
+    }
 }

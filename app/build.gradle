@@ -24,4 +24,5 @@ dependencies {
     compile project(':rajawalicardboard')
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile "com.android.support:support-v4:21.0.+"
+    compile 'ly.kite:kite-print-sdk:4.+'
 }

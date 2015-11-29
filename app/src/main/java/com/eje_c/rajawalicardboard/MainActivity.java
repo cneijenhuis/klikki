@@ -1,14 +1,17 @@
 package com.eje_c.rajawalicardboard;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 
-import org.rajawali3d.cardboard.RajawaliCardboardRenderer;
 import org.rajawali3d.cardboard.RajawaliCardboardView;
+
+import java.util.ArrayList;
+
+import ly.kite.KiteSDK;
+import ly.kite.catalogue.Asset;
 
 
 public class MainActivity extends CardboardActivity {
@@ -59,6 +62,12 @@ public class MainActivity extends CardboardActivity {
     @Override
     public synchronized void onCardboardTrigger() {
 //        System.out.println("CARDBOARD TRIGGERED");
+        if (renderer.isLookingUp()) {
+            ArrayList<Asset> assets = renderer.assets();
+            KiteSDK.getInstance(this, "9465b5eaebd8d2617675a45c60838ac4c0da1208", KiteSDK.DefaultEnvironment.TEST).startShopping(this, assets);
+            return;
+        }
+
         if (displaysCircle) {
             renderer.setPicturePos();
             renderer.unloadCircleOfImages();
