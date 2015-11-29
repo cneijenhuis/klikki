@@ -62,11 +62,11 @@ public class MainActivity extends CardboardActivity {
     @Override
     public synchronized void onCardboardTrigger() {
 //        System.out.println("CARDBOARD TRIGGERED");
-        if (renderer.isLookingUp()) {
-            ArrayList<Asset> assets = renderer.assets();
-            KiteSDK.getInstance(this, "9465b5eaebd8d2617675a45c60838ac4c0da1208", KiteSDK.DefaultEnvironment.TEST).startShopping(this, assets);
-            return;
-        }
+//        if (renderer.isLookingUp()) {
+//            ArrayList<Asset> assets = renderer.assets();
+//            KiteSDK.getInstance(this, "9465b5eaebd8d2617675a45c60838ac4c0da1208", KiteSDK.DefaultEnvironment.TEST).startShopping(this, assets);
+//            return;
+//        }
 
         if (displaysCircle) {
             renderer.setPicturePos();

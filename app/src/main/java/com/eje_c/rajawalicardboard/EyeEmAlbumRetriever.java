@@ -90,8 +90,8 @@ public class EyeEmAlbumRetriever {
     }
 
     public void getAlbums() {
-        // String url = "https://api.eyeem.com/v2/albums?access_token=0ed006490704660a8b8c22fc1deac5adc4be79b6&trending=1&detailed=0";
-        String url = "https://api.eyeem.com/v2/albums?access_token=0ed006490704660a8b8c22fc1deac5adc4be79b6&detailed=0&ids=13216,1349750,1540,626,33,4604,10548559,11645128";
+        String url = "https://api.eyeem.com/v2/albums?access_token=0ed006490704660a8b8c22fc1deac5adc4be79b6&trending=1&detailed=0";
+        // String url = "https://api.eyeem.com/v2/albums?access_token=0ed006490704660a8b8c22fc1deac5adc4be79b6&detailed=0&ids=13216,1349750,1540,626,33,4604,10548559,11645128";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
                     @Override

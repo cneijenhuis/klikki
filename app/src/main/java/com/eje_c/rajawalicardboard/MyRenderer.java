@@ -119,7 +119,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         }
         kite.setMaterial(material);
 
-        getCurrentScene().addChild(kite);
+//        getCurrentScene().addChild(kite);
     }
 
     public void loadCircleOfImages() {
@@ -146,7 +146,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
             }
         }
         getCurrentScene().clearChildren();
-        getCurrentScene().addChild(kite);
+//        getCurrentScene().addChild(kite);
     }
 
     private Vector3 position(int i) {
