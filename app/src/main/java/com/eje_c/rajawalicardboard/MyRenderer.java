@@ -89,7 +89,8 @@ public class MyRenderer extends RajawaliCardboardRenderer {
     public void loadCircleOfImages() {
         imgPointer = -1;
         for (int i = 0; i < 8; i++) {
-            bmCircle[i] = getNextBitmap();
+            bmCircle[i] = getNextCircleBitmap(i);
+            if (bmCircle[i] == null) continue;
             pictureCircle[i] = createPhotoSphereWithTexture(bmCircle[i], 50f);
             pictureCircle[i].setPosition(position(i));
             pictureCircle[i].setRotation(Vector3.Axis.Y, rotation(i));
@@ -97,7 +98,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         }
     }
 
-    public void unloadCircleOfImages() {
+    public synchronized void unloadCircleOfImages() {
         for (int i = 0; i < 8; i++) {
             if (bmCircle[i] != null) {
                 bmCircle[i].recycle();
@@ -108,6 +109,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
                 pictureCircle[i] = null;
             }
         }
+        getCurrentScene().clearChildren();
     }
 
     private Vector3 position(int i) {
@@ -145,7 +147,8 @@ public class MyRenderer extends RajawaliCardboardRenderer {
 
         if (bm != null) bm.recycle();
 
-        bm = getNextBitmap();
+        bm = getNextAlbumBitmap();
+        if (bm == null) return;
         picture = createPhotoSphereWithTexture(bm, 100f);
 
         picture.setPosition(position(picturePos));
@@ -172,9 +175,17 @@ public class MyRenderer extends RajawaliCardboardRenderer {
         if (oldPicture != null) getCurrentScene().removeChild(oldPicture);
     }
 
+    protected Bitmap getNextCircleBitmap(int pos) {
+        return getNextBitmap();
+    }
+
+    protected Bitmap getNextAlbumBitmap() {
+        return getNextBitmap();
+    }
+
     private Bitmap getNextBitmap() {
         imgPointer = (imgPointer + 1) % imgs.length;
-        System.out.println(imgPointer);
+//        System.out.println(imgPointer);
         return BitmapFactory.decodeResource(mContext.getResources(), imgs[imgPointer]);
     }
 

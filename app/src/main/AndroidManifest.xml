@@ -17,13 +17,14 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:label="klikki"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
 
         <!-- NOTE: Activity must be in landscape orientation -->
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="klikki"
             android:screenOrientation="landscape">
 
             <intent-filter>
