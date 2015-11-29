@@ -129,17 +129,27 @@ public class EyeEmAlbumRetriever {
     }
 
     public void cacheImagesFromAlbums() {
+        String[] alreadyDownloaded = context.fileList();
         for(Album album : albums) {
-            cachePhoto(album.firstPhotoURL());
+            cachePhoto(album.firstPhotoURL(), alreadyDownloaded);
         }
         for(Album album : albums) {
             for (final String photo : album.otherPhotoURLs()) {
-                cachePhoto(photo);
+                cachePhoto(photo, alreadyDownloaded);
             }
         }
     }
 
-    private void cachePhoto(final String photo) {
+    private void cachePhoto(final String photo, String[] alreadyDownloaded) {
+        final String filename = getFilename(photo);
+
+        for (String d : alreadyDownloaded) {
+            if (filename.equals(d)) {
+                System.out.println("Photo found in cache!");
+                return;
+            }
+        }
+
         photosToCache++;
         /*
         StringRequest request = new StringRequest(Request.Method.GET, photo,
@@ -171,8 +181,6 @@ public class EyeEmAlbumRetriever {
         ImageRequest request = new ImageRequest(photo, new Response.Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap bitmap) {
-                    String filename = getFilename(photo);
-
                     try {
                         FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);

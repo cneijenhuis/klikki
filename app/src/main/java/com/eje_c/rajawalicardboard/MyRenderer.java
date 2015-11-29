@@ -149,7 +149,7 @@ public class MyRenderer extends RajawaliCardboardRenderer {
 
         bm = getNextAlbumBitmap();
         if (bm == null) return;
-        picture = createPhotoSphereWithTexture(bm, 100f);
+        picture = createPhotoSphereWithTexture(bm, 80f);
 
         picture.setPosition(position(picturePos));
         picture.setRotation(Vector3.Axis.Y, rotation(picturePos));
